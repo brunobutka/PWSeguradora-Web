@@ -30,7 +30,7 @@ public class ControlePessoa implements Serializable {
     }
 
     public String listar() {
-        return "/privado/pessoa/listar?faces-redirect-true";
+        return "/privado/pessoa/listar?faces-redirect=true";
     }
     
     public void novo() {

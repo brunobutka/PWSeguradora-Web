@@ -26,12 +26,12 @@ public class DAOGenerico<TIPO> implements Serializable {
     }
 
     public List<TIPO> getListaObjetos() {
-        String jpql = "from " + classePersistente.getSimpleName();
+        String jpql = "from " + classePersistente.getSimpleName() + " order by id";
         return em.createQuery(jpql).getResultList();
     }
     
     public List<TIPO> getListaTodos() {
-        String jpql = "from " + classePersistente.getSimpleName();
+        String jpql = "from " + classePersistente.getSimpleName() + " order by id";
         return em.createQuery(jpql).getResultList();
     }
     

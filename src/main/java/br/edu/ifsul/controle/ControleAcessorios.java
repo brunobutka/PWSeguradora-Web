@@ -32,7 +32,7 @@ public class ControleAcessorios implements Serializable {
     }
 
     public String listar() {
-        return "/privado/acessorios/listar?faces-redirect-true";
+        return "/privado/acessorios/listar?faces-redirect=true";
     }
     
     public void novo() {

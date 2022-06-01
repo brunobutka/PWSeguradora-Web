@@ -30,6 +30,9 @@
                     </p:column> 
                     <p:column headerText="Email">
                         <p:outputLabel value="#{obj.email}"/>
+                    </p:column>
+                    <p:column headerText="Telefone">
+                        <p:outputLabel value="#{obj.telefone}"/>
                     </p:column> 
                     <p:column headerText="Percentual de Comissão">
                         <p:outputLabel value="#{obj.percentualComissao}"/>
@@ -60,14 +63,15 @@
                 </p:dataTable>
             </h:form>
             <p:dialog header="Edição" widgetVar="dlg" resizable="false"
-                      modal="true" width="50%" height="100%">
+                      modal="true" width="60%" height="100%">
                 <h:form id="formEdicao" prependId="false">
                     <p:growl id="growl"/>
                     <div align="center">
-                        <p:panelGrid columns="2">
+                        <p:panelGrid columns="4">
                             <p:outputLabel value="ID" for="txtId"/>
                             <p:inputText value="#{controleCorretor.objeto.id}"
                                          readonly="true" size="5" id="txtId"/>
+                            <p:outputLabel/><p:outputLabel/>
                             <p:outputLabel value="Nome" for="txtNome"/>
                             <p:inputText id="txtNome"
                                          value="#{controleCorretor.objeto.nome}"
@@ -95,16 +99,17 @@
                             <p:inputNumber id="txtPercentualComissao"
                                            value="#{controleCorretor.objeto.percentualComissao}" 
                                            thousandSeparator="" decimalSeparator="." decimalPlaces="2"
-                                           minValue="0"/>
+                                           minValue="0" placeholder="Obrigatório" maxValue="100"/>
                             <p:outputLabel value="Nome de Usuário" for="txtNomeUsuario"/>
                             <p:inputText id="txtNomeUsuario"
                                          value="#{controleCorretor.objeto.nomeUsuario}"
                                          size="20" maxlength="20"
                                          placeholder="Obrigatório"/>
                             <p:outputLabel value="Senha" for="txtSenha"/>
-                                    <p:password id="txtSenha" 
-                                                value="#{controleCorretor.objeto.senha}"
-                                                size="20" maxlength="20" redisplay="true"/> 
+                            <p:password id="txtSenha" 
+                                        value="#{controleCorretor.objeto.senha}"
+                                        size="20" maxlength="20" redisplay="true"
+                                        placeholder="Obrigatório"/> 
                         </p:panelGrid>
                     </div>
                     <p:panel>

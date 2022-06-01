@@ -30,7 +30,7 @@ public class ControleCorretor implements Serializable {
     }
 
     public String listar() {
-        return "/privado/corretor/listar?faces-redirect-true";
+        return "/privado/corretor/listar?faces-redirect=true";
     }
     
     public void novo() {
