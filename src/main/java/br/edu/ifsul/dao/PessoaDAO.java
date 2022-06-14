@@ -18,6 +18,15 @@ public class PessoaDAO<TIPO> extends DAOGenerico<Pessoa> implements Serializable
     public PessoaDAO() {
         super();
         classePersistente = Pessoa.class;
+        // lista de ordenações possíveis
+        listaOrdem.add(new Ordem("id", "ID", "="));
+        listaOrdem.add(new Ordem("nome", "Nome", "like"));
+        listaOrdem.add(new Ordem("cpf", "CPF", "like"));
+        // ordem atual
+        ordemAtual = listaOrdem.get(1);
+        // inicializar o conversor de ordem com a lista de ordens
+        converterOrdem = new ConverterOrdem();
+        converterOrdem.setListaOrdem(listaOrdem);
     }
     
 }

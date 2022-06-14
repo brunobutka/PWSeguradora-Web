@@ -18,6 +18,15 @@ public class CorretorDAO<TIPO> extends DAOGenerico<Corretor> implements Serializ
     public CorretorDAO() {
         super();
         classePersistente = Corretor.class;
+        // lista de ordenações possíveis
+        listaOrdem.add(new Ordem("id", "ID", "="));
+        listaOrdem.add(new Ordem("nome", "Nome", "like"));
+        listaOrdem.add(new Ordem("cpf", "CPF", "like"));
+        // ordem atual
+        ordemAtual = listaOrdem.get(1);
+        // inicializar o conversor de ordem com a lista de ordens
+        converterOrdem = new ConverterOrdem();
+        converterOrdem.setListaOrdem(listaOrdem);
     }
     
 }

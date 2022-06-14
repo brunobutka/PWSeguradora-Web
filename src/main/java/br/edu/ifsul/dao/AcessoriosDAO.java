@@ -18,6 +18,14 @@ public class AcessoriosDAO<TIPO> extends DAOGenerico<Acessorios> implements Seri
     public AcessoriosDAO() {
         super();
         classePersistente = Acessorios.class;
+        // lista de ordenações possíveis
+        listaOrdem.add(new Ordem("id", "ID", "="));
+        listaOrdem.add(new Ordem("descricao", "Descrição", "like"));
+        // ordem atual
+        ordemAtual = listaOrdem.get(1);
+        // inicializar o conversor de ordem com a lista de ordens
+        converterOrdem = new ConverterOrdem();
+        converterOrdem.setListaOrdem(listaOrdem);
     }
     
 }

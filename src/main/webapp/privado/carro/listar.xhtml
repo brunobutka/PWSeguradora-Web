@@ -15,8 +15,48 @@
                                  update="formEdicao"
                                  process="@this"
                                  oncomplete="PF('dlg').show();"/>
+                <div align="center">
+                    <p:panelGrid columns="11">
+                        <p:outputLabel value="Ordem: "/>
+                        <p:selectOneMenu value="#{controleCarro.dao.ordemAtual}"
+                                         converter="#{controleCarro.dao.converterOrdem}">
+                            <f:selectItems value="#{controleCarro.dao.listaOrdem}"
+                                           var="ord" itemValue="#{ord.atributo}"/>
+                            <p:ajax update="listagem"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Filtro:"/>
+                        <p:inputText value="#{controleCarro.dao.filtro}">
+                            <p:ajax update="listagem" event="blur"/>
+                        </p:inputText>
+                        <p:commandButton value="Filtrar" update="listagem"/>
+                        <p:outputLabel value="Máximo de objetos:"/>
+                        <p:selectOneMenu value="#{controleCarro.dao.maximoObjetos}">
+                            <f:selectItem itemLabel="5" itemValue="5"/>
+                            <f:selectItem itemLabel="10" itemValue="10"/>
+                            <f:selectItem itemLabel="25" itemValue="25"/>
+                            <f:selectItem itemLabel="50" itemValue="50"/>
+                            <f:selectItem itemLabel="100" itemValue="100"/>
+                            <p:ajax update="listagem"/>
+                        </p:selectOneMenu>
+                        <p:commandButton action="#{controleCarro.dao.primeiro()}"
+                                         title="Primeiro" update="listagem"
+                                         icon="pi pi-step-backward"/>
+                        <p:commandButton action="#{controleCarro.dao.anterior()}"
+                                         title="Anterior" update="listagem"
+                                         icon="pi pi-chevron-left"/>  
+                        <p:commandButton action="#{controleCarro.dao.proximo()}"
+                                         title="Próximo" update="listagem"
+                                         icon="pi pi-chevron-right"/> 
+                        <p:commandButton action="#{controleCarro.dao.ultimo()}"
+                                         title="Ultimo" update="listagem"
+                                         icon="pi pi-step-forward"/>                        
+                    </p:panelGrid>
+                </div>
                 <p:dataTable value="#{controleCarro.dao.listaObjetos}" var="obj"
                              id="listagem">
+                    <f:facet name="footer">
+                        <p:outputLabel value="#{controleCarro.dao.mensagemNavegacao}"/>
+                    </f:facet>
                     <p:column headerText="ID">
                         <p:outputLabel value="#{obj.id}"/>
                     </p:column>
@@ -108,7 +148,7 @@
                                 <f:selectItem itemLabel="Selecione um registro"
                                               noSelectionOption="true"/>
                                 <f:selectItems 
-                                    value="#{controleCarro.daoPessoa.listaObjetos}"
+                                    value="#{controleCarro.daoPessoa.listaTodos}"
                                     var="pes" itemLabel="#{pes.nome}"/>
                             </p:selectOneMenu>
                         </p:panelGrid>

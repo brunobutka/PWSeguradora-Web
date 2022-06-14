@@ -18,6 +18,15 @@ public class CarroDAO<TIPO> extends DAOGenerico<Carro> implements Serializable {
     public CarroDAO() {
         super();
         classePersistente = Carro.class;
+        // lista de ordenações possíveis
+        listaOrdem.add(new Ordem("id", "ID", "="));
+        listaOrdem.add(new Ordem("placa", "Placa", "like"));
+        listaOrdem.add(new Ordem("pessoa.nome", "Pessoa", "like"));
+        // ordem atual
+        ordemAtual = listaOrdem.get(1);
+        // inicializar o conversor de ordem com a lista de ordens
+        converterOrdem = new ConverterOrdem();
+        converterOrdem.setListaOrdem(listaOrdem);
     }
     
 }
