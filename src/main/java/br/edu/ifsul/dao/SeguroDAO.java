@@ -4,7 +4,7 @@
  */
 package br.edu.ifsul.dao;
 
-import br.edu.ifsul.modelo.Corretor;
+import br.edu.ifsul.modelo.Seguro;
 import java.io.Serializable;
 import javax.ejb.Stateful;
 
@@ -13,15 +13,16 @@ import javax.ejb.Stateful;
  * @author bruno
  */
 @Stateful
-public class CorretorDAO<TIPO> extends DAOGenerico<Corretor> implements Serializable {
+public class SeguroDAO<TIPO> extends DAOGenerico<Seguro> implements Serializable {
     
-    public CorretorDAO() {
+    public SeguroDAO() {
         super();
-        classePersistente = Corretor.class;
+        classePersistente = Seguro.class;
         // lista de ordenações possíveis
         listaOrdem.add(new Ordem("id", "ID", "="));
-        listaOrdem.add(new Ordem("nome", "Nome", "like"));
-        listaOrdem.add(new Ordem("cpf", "CPF", "like"));
+        listaOrdem.add(new Ordem("valorTotal", "Valor Total", "="));
+        listaOrdem.add(new Ordem("corretor.nome", "Corretor", "like"));
+        listaOrdem.add(new Ordem("carro.placa", "Placa", "like"));
         // ordem atual
         ordemAtual = listaOrdem.get(0);
         // inicializar o conversor de ordem com a lista de ordens

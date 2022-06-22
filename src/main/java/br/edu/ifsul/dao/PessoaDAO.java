@@ -23,7 +23,7 @@ public class PessoaDAO<TIPO> extends DAOGenerico<Pessoa> implements Serializable
         listaOrdem.add(new Ordem("nome", "Nome", "like"));
         listaOrdem.add(new Ordem("cpf", "CPF", "like"));
         // ordem atual
-        ordemAtual = listaOrdem.get(1);
+        ordemAtual = listaOrdem.get(0);
         // inicializar o conversor de ordem com a lista de ordens
         converterOrdem = new ConverterOrdem();
         converterOrdem.setListaOrdem(listaOrdem);

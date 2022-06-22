@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titulo">CRUD de Seguros</ui:define>
+        <ui:define name="conteudo">
+            <h:form id="formListagem" prependId="false">
+                <p:growl/>
+                <p:commandButton value="Novo" actionListener="#{controleSeguro.novo()}"
+                                 icon="pi pi-plus"
+                                 update="formEdicao"
+                                 process="@this"
+                                 oncomplete="PF('dlg').show();"/>
+                <div align="center">
+                    <p:panelGrid columns="11">
+                        <p:outputLabel value="Ordem: "/>
+                        <p:selectOneMenu value="#{controleSeguro.dao.ordemAtual}"
+                                         converter="#{controleSeguro.dao.converterOrdem}">
+                            <f:selectItems value="#{controleSeguro.dao.listaOrdem}"
+                                           var="ord" itemValue="#{ord.atributo}"/>
+                            <p:ajax update="listagem"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Filtro:"/>
+                        <p:inputText value="#{controleSeguro.dao.filtro}">
+                            <p:ajax update="listagem" event="blur"/>
+                        </p:inputText>
+                        <p:commandButton value="Filtrar" update="listagem"/>
+                        <p:outputLabel value="Máximo de objetos:"/>
+                        <p:selectOneMenu value="#{controleSeguro.dao.maximoObjetos}">
+                            <f:selectItem itemLabel="5" itemValue="5"/>
+                            <f:selectItem itemLabel="10" itemValue="10"/>
+                            <f:selectItem itemLabel="25" itemValue="25"/>
+                            <f:selectItem itemLabel="50" itemValue="50"/>
+                            <f:selectItem itemLabel="100" itemValue="100"/>
+                            <p:ajax update="listagem"/>
+                        </p:selectOneMenu>
+                        <p:commandButton action="#{controleSeguro.dao.primeiro()}"
+                                         title="Primeiro" update="listagem"
+                                         icon="pi pi-step-backward"/>
+                        <p:commandButton action="#{controleSeguro.dao.anterior()}"
+                                         title="Anterior" update="listagem"
+                                         icon="pi pi-chevron-left"/>  
+                        <p:commandButton action="#{controleSeguro.dao.proximo()}"
+                                         title="Próximo" update="listagem"
+                                         icon="pi pi-chevron-right"/> 
+                        <p:commandButton action="#{controleSeguro.dao.ultimo()}"
+                                         title="Ultimo" update="listagem"
+                                         icon="pi pi-step-forward"/>                        
+                    </p:panelGrid>
+                </div>
+                <p:dataTable value="#{controleSeguro.dao.listaObjetos}" var="obj"
+                             id="listagem">
+                    <f:facet name="footer">
+                        <p:outputLabel value="#{controleSeguro.dao.mensagemNavegacao}"/>
+                    </f:facet>
+                    <p:column headerText="ID">
+                        <p:outputLabel value="#{obj.id}"/>
+                    </p:column>
+                    <p:column headerText="Data">
+                        <p:outputLabel value="#{obj.data}">
+                            <f:converter converterId="converterCalendar"/>
+                        </p:outputLabel>
+                    </p:column>     
+                    <p:column headerText="Inicio Vigência">
+                        <p:outputLabel value="#{obj.inicioVigencia}">
+                            <f:converter converterId="converterCalendar"/>
+                        </p:outputLabel>
+                    </p:column> 
+                    <p:column headerText="Fim Vigência">
+                        <p:outputLabel value="#{obj.fimVigencia}">
+                            <f:converter converterId="converterCalendar"/>
+                        </p:outputLabel>
+                    </p:column> 
+                    <p:column headerText="Valor Total">
+                        <p:outputLabel value="#{obj.valorTotal}"/>
+                    </p:column> 
+                    <p:column headerText="Valor Fipe">
+                        <p:outputLabel value="#{obj.valorFipe}"/>
+                    </p:column> 
+                    <p:column headerText="Placa Carro">
+                        <p:outputLabel value="#{obj.carro.placa}"/>
+                    </p:column>
+                    <p:column headerText="Corretor">
+                        <p:outputLabel value="#{obj.corretor.nome}"/>
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <div align="center">
+                            <p:commandButton 
+                                actionListener="#{controleSeguro.alterar(obj.id)}"
+                                icon="pi pi-pencil"
+                                title="Editar o objeto de id: #{obj.id}"
+                                update="formEdicao" process="@this"
+                                oncomplete="PF('dlg').show();"/>
+                            <p:commandButton
+                                actionListener="#{controleSeguro.excluir(obj.id)}"
+                                icon="pi pi-trash"
+                                update="@form"
+                                process="@this"
+                                title="Remover o objeto de id: #{obj.id}"
+                                onclick="if (!confirm('Deseja remover o objeto de id: #{obj.id}')) return false"/>
+                        </div>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            
+            <p:dialog header="Edição" widgetVar="dlg" resizable="false"
+                      modal="true" width="50%" height="100%">
+                <h:form id="formEdicao" prependId="false">
+                    <p:growl id="growl"/>
+                    <div align="center">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="ID" for="txtId"/>
+                            <p:inputText value="#{controleSeguro.objeto.id}"
+                                         readonly="true" size="5" id="txtId"/>
+                            <p:outputLabel value="Data" for="txtData"/>
+                            <p:calendar  id="txtData"
+                                         value="#{controleSeguro.objeto.data}"
+                                         mask="dd/MM/yyyy" navigator="true">
+                                <f:converter converterId="converterCalendar"/>
+                            </p:calendar>
+                            <p:outputLabel value="Início Vigência" for="txtInicioVigencia"/>
+                            <p:calendar  id="txtInicioVigencia"
+                                         value="#{controleSeguro.objeto.inicioVigencia}"
+                                         mask="dd/MM/yyyy" navigator="true">
+                                <f:converter converterId="converterCalendar"/>
+                            </p:calendar>
+                            <p:outputLabel value="Fim Vigência" for="txtFimVigencia"/>
+                            <p:calendar  id="txtFimVigencia"
+                                         value="#{controleSeguro.objeto.fimVigencia}"
+                                         mask="dd/MM/yyyy" navigator="true">
+                                <f:converter converterId="converterCalendar"/>
+                            </p:calendar>
+                            <p:outputLabel value="Valor Total" for="txtValorTotal"/>
+                            <p:inputText id="txtValorTotal" 
+                                         value="#{controleSeguro.objeto.valorTotal}"
+                                         size="11" maxlength="11" 
+                                         placeholder="Obrigatório"/>
+                            <p:outputLabel value="Valor Fipe" for="txtValorFipe"/>
+                            <p:inputText id="txtValorFipe" 
+                                         value="#{controleSeguro.objeto.valorFipe}"
+                                         size="11" maxlength="11" 
+                                         placeholder="Obrigatório"/>
+                            <p:outputLabel value="Corretor" for="selectCorretor"/>
+                            <p:selectOneMenu value="#{controleSeguro.objeto.corretor}"
+                                             id="selectCorretor"
+                                             filter="true"
+                                             filterMatchMode="startsWith">
+                                <f:converter binding="#{converterCorretor}"/>
+                                <f:selectItem itemLabel="Selecione um registro"
+                                              noSelectionOption="true"/>
+                                <f:selectItems 
+                                    value="#{controleSeguro.daoCorretor.listaTodos}"
+                                    var="cor" itemLabel="#{cor.nome}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Carro" for="selectCarro"/>
+                            <p:selectOneMenu value="#{controleSeguro.objeto.carro}"
+                                             id="selectCarro"
+                                             filter="true"
+                                             filterMatchMode="startsWith">
+                                <f:converter binding="#{converterCarro}"/>
+                                <f:selectItem itemLabel="Selecione um registro"
+                                              noSelectionOption="true"/>
+                                <f:selectItems 
+                                    value="#{controleSeguro.daoCarro.listaTodos}"
+                                    var="car" itemLabel="#{car.placa}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </div>
+                    <p:panel>
+                        <div align="center">
+                            <p:commandButton value="Salvar"
+                                             icon="pi pi-save"
+                                             actionListener="#{controleSeguro.salvar()}"
+                                             update="formEdicao formListagem"
+                                             oncomplete="if(!args.validationFailed){PF('dlg').hide();}"/>
+                        </div>
+                    </p:panel>
+                </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</html>
+

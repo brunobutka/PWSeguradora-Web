@@ -23,7 +23,7 @@ public class CarroDAO<TIPO> extends DAOGenerico<Carro> implements Serializable {
         listaOrdem.add(new Ordem("placa", "Placa", "like"));
         listaOrdem.add(new Ordem("pessoa.nome", "Pessoa", "like"));
         // ordem atual
-        ordemAtual = listaOrdem.get(1);
+        ordemAtual = listaOrdem.get(0);
         // inicializar o conversor de ordem com a lista de ordens
         converterOrdem = new ConverterOrdem();
         converterOrdem.setListaOrdem(listaOrdem);
