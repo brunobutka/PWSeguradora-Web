@@ -9,9 +9,11 @@ import br.edu.ifsul.dao.CorretorDAO;
 import br.edu.ifsul.dao.SeguroDAO;
 import br.edu.ifsul.dao.PessoaDAO;
 import br.edu.ifsul.modelo.Carro;
+import br.edu.ifsul.modelo.Cobertura;
 import br.edu.ifsul.modelo.Corretor;
 import br.edu.ifsul.modelo.Seguro;
 import br.edu.ifsul.modelo.Pessoa;
+import br.edu.ifsul.modelo.Sinistro;
 import br.edu.ifsul.util.Util;
 
 import java.io.Serializable;
@@ -34,9 +36,57 @@ public class ControleSeguro implements Serializable {
     private CorretorDAO<Corretor> daoCorretor;
     @EJB
     private CarroDAO<Carro> daoCarro;
+    private Cobertura cobertura;
+    private Boolean novaCobertura;
+    private Sinistro sinistro;
+    private Boolean novoSinistro;
     
     public ControleSeguro() {
         
+    }
+    
+    public void novaCobertura() {
+        cobertura = new Cobertura();
+        novaCobertura = true;
+    }
+    
+    public void alterarCobertura(int index) {
+        cobertura = objeto.getCoberturas().get(index);
+        novaCobertura = false;
+    }
+    
+    public void salvarCobertura() {
+        if(novaCobertura) {
+            objeto.adicionarCobertura(cobertura);
+        }
+        Util.mensagemInformacao("Cobertura adicionada ou alterada com sucesso!");
+    }
+    
+    public void removerCobertura(int index) {
+        objeto.removerCobertura(index);
+        Util.mensagemInformacao("Sinistro removido com sucesso!");
+    }
+    
+    public void novoSinistro() {
+        sinistro = new Sinistro();
+        novoSinistro = true;
+    }
+    
+    public void alterarSinistro(int index) {
+        sinistro = objeto.getSinistros().get(index);
+        novoSinistro = false;
+    }
+    
+    public void salvarSinistro() {
+        if(novoSinistro) {
+            objeto.adicionarSinistro(sinistro);
+        }
+        Util.mensagemInformacao("Sinistro adicionado ou alterado com sucesso!");
+    }
+    
+    public void removerSinistro(int index) {
+        objeto.removerSinistro(index);
+        Util.mensagemInformacao("Sinistro removido com sucesso!");
     }
 
     public String listar() {
@@ -108,6 +158,38 @@ public class ControleSeguro implements Serializable {
 
     public void setDaoCarro(CarroDAO<Carro> daoCarro) {
         this.daoCarro = daoCarro;
+    }
+
+    public Cobertura getCobertura() {
+        return cobertura;
+    }
+
+    public void setCobertura(Cobertura cobertura) {
+        this.cobertura = cobertura;
+    }
+
+    public Boolean getNovaCobertura() {
+        return novaCobertura;
+    }
+
+    public void setNovaCobertura(Boolean novaCobertura) {
+        this.novaCobertura = novaCobertura;
+    }
+
+    public Sinistro getSinistro() {
+        return sinistro;
+    }
+
+    public void setSinistro(Sinistro sinistro) {
+        this.sinistro = sinistro;
+    }
+
+    public Boolean getNovoSinistro() {
+        return novoSinistro;
+    }
+
+    public void setNovoSinistro(Boolean novoSinistro) {
+        this.novoSinistro = novoSinistro;
     }
     
 }

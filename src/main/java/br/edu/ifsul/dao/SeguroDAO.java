@@ -30,4 +30,10 @@ public class SeguroDAO<TIPO> extends DAOGenerico<Seguro> implements Serializable
         converterOrdem.setListaOrdem(listaOrdem);
     }
     
+    public Seguro getObjectByID(Object id) throws Exception {
+        Seguro obj = em.find(Seguro.class, id);
+        obj.getCoberturas().size();
+        return obj;
+    }
+    
 }
