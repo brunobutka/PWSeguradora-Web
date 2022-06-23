@@ -9,7 +9,7 @@
               modal="true" width="50%" height="100%">
         <h:form id="formEdicao" prependId="false">
             <p:growl id="growl"/>
-            <p:tabView id="tab">
+            <p:tabView id="tab" activeIndex="#{controleSeguro.abaAtiva}">
                 <p:tab title="Dados Principais">
                     <div align="center">
                         <p:panelGrid columns="4">
@@ -116,7 +116,7 @@
                                     icon="pi pi-trash"
                                     update="tab:listaSinistros growl"
                                     process="@this"
-                                    onclick="if (!confirm('Confirma a esclusão'))
+                                    onclick="if (!confirm('Confirma a exclusão'))
                                                 return false"/>
                             </div>
                         </p:column>

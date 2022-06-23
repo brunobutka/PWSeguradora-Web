@@ -40,6 +40,7 @@ public class ControleSeguro implements Serializable {
     private Boolean novaCobertura;
     private Sinistro sinistro;
     private Boolean novoSinistro;
+    private int abaAtiva;
     
     public ControleSeguro() {
         
@@ -95,11 +96,13 @@ public class ControleSeguro implements Serializable {
     
     public void novo() {
         objeto = new Seguro();
+        abaAtiva = 0;
     }
     
     public void alterar(Object id) {
         try {
             objeto = dao.getObjectByID(id);
+            abaAtiva = 0;
         } catch (Exception e) {
             Util.mensagemErro("Erro ao recuperar objeto: " + Util.getMensagemErro(e));
         }
@@ -190,6 +193,14 @@ public class ControleSeguro implements Serializable {
 
     public void setNovoSinistro(Boolean novoSinistro) {
         this.novoSinistro = novoSinistro;
+    }
+
+    public int getAbaAtiva() {
+        return abaAtiva;
+    }
+
+    public void setAbaAtiva(int abaAtiva) {
+        this.abaAtiva = abaAtiva;
     }
     
 }
