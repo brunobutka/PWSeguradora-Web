@@ -34,6 +34,7 @@ public class SeguroDAO<TIPO> extends DAOGenerico<Seguro> implements Serializable
     public Seguro getObjectByID(Object id) throws Exception {
         Seguro obj = em.find(Seguro.class, id);
         obj.getSinistros().size();
+        obj.getCoberturas().size();
         return obj;
     }
     

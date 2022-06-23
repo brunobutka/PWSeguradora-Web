@@ -7,12 +7,10 @@ package br.edu.ifsul.controle;
 import br.edu.ifsul.dao.CarroDAO;
 import br.edu.ifsul.dao.CorretorDAO;
 import br.edu.ifsul.dao.SeguroDAO;
-import br.edu.ifsul.dao.PessoaDAO;
 import br.edu.ifsul.modelo.Carro;
 import br.edu.ifsul.modelo.Cobertura;
 import br.edu.ifsul.modelo.Corretor;
 import br.edu.ifsul.modelo.Seguro;
-import br.edu.ifsul.modelo.Pessoa;
 import br.edu.ifsul.modelo.Sinistro;
 import br.edu.ifsul.util.Util;
 
@@ -65,7 +63,7 @@ public class ControleSeguro implements Serializable {
     
     public void removerCobertura(int index) {
         objeto.removerCobertura(index);
-        Util.mensagemInformacao("Sinistro removido com sucesso!");
+        Util.mensagemInformacao("Cobertura removida com sucesso!");
     }
     
     public void novoSinistro() {

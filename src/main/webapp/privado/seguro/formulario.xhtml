@@ -123,7 +123,45 @@
                     </p:dataTable>
                 </p:tab>
                 <p:tab title="Cobertura">
-
+                    <p:dataTable value="#{controleSeguro.objeto.coberturas}"
+                                 var="cobertura" rowIndexVar="idxCobertura"
+                                 id="listaCoberturas">
+                        <f:facet name="header">
+                            <p:commandButton value="Nova Cobertura"
+                                             actionListener="#{controleSeguro.novaCobertura()}"
+                                             update=":formCobertura"
+                                             icon="pi pi-plus"
+                                             process="@this"
+                                             oncomplete="PF('dlgCobertura').show();"/>
+                        </f:facet>
+                        <p:column headerText="ID">
+                            <p:outputLabel value="#{cobertura.id}"/>
+                        </p:column>
+                        <p:column headerText="Descrição">
+                            <p:outputLabel value="#{cobertura.descricao}"/>
+                        </p:column>
+                        <p:column headerText="Valor">
+                            <p:outputLabel value="#{cobertura.valor}"/>
+                        </p:column>
+                        <p:column headerText="Ações">
+                            <div align="center">
+                                <p:commandButton 
+                                    actionListener="#{controleSeguro.alterarCobertura(idxCobertura)}"
+                                    icon="pi pi-pencil"
+                                    title="Editar"
+                                    update=":formCobertura" 
+                                    process="@this"
+                                    oncomplete="PF('dlgCobertura').show();"/>
+                                <p:commandButton
+                                    actionListener="#{controleSeguro.removerCobertura(idxCobertura)}"
+                                    icon="pi pi-trash"
+                                    update="tab:listaCoberturas growl"
+                                    process="@this"
+                                    onclick="if (!confirm('Confirma a exclusão'))
+                                                return false"/>
+                            </div>
+                        </p:column>
+                    </p:dataTable>
                 </p:tab>
             </p:tabView>
 
@@ -175,6 +213,40 @@
                 <p:inputText id="txtEstadoSinistro" value="#{controleSeguro.sinistro.estado}"
                              placeholder="Obrigatório"
                              size="50" maxlength="50"/>
+            </p:panelGrid>
+        </h:form>
+        <ui:include src="/templates/ajaxstatus.xhtml"/>
+    </p:dialog>
+
+    <p:dialog header="Edição de Cobertura" widgetVar="dlgCobertura" resizable="false"
+              modal="true">
+        <h:form id="formCobertura">
+            <p:growl/>
+            <p:panelGrid columns="2">
+                <f:facet name="footer">
+                    <div align="center">
+                        <p:commandButton value="Salvar"
+                                         icon="pi pi-save"
+                                         actionListener="#{controleSeguro.salvarCobertura()}"
+                                         update="tab:listaCoberturas growl"
+                                         process="@form"
+                                         oncomplete="if(!args.validationFailed){PF('dlgCobertura').hide();}"/>
+
+                    </div>
+                </f:facet>
+                <p:outputLabel value="ID"/>
+                <p:inputText value="#{controleSeguro.cobertura.id}"
+                             readonly="true"/>
+                <p:outputLabel value="Descrição" for="txtDescricaoCobertura"/>
+                <p:inputText id="txtDescricaoCobertura" value="#{controleSeguro.cobertura.descricao}"
+                             size="50" maxlength="50"
+                             placeholder="Obrigatório"/>
+                <p:outputLabel value="Valor" for="txtValorCobertura"/>
+                <p:inputText id="txtValorCobertura" 
+                             value="#{controleSeguro.cobertura.valor}"
+                             size="11" maxlength="11" 
+                             placeholder="Obrigatório"/>
+
             </p:panelGrid>
         </h:form>
         <ui:include src="/templates/ajaxstatus.xhtml"/>
