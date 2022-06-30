@@ -29,4 +29,12 @@ public class CarroDAO<TIPO> extends DAOGenerico<Carro> implements Serializable {
         converterOrdem.setListaOrdem(listaOrdem);
     }
     
+    @Override
+    public Carro getObjectByID(Object id) throws Exception {
+        Carro obj = em.find(Carro.class, id);
+        // uso para evitar o erro de lazy inicialization exception
+        obj.getAcessorios().size();
+        return obj;
+    } 
+    
 }

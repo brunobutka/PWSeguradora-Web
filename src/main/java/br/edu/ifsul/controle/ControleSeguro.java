@@ -13,8 +13,12 @@ import br.edu.ifsul.modelo.Corretor;
 import br.edu.ifsul.modelo.Seguro;
 import br.edu.ifsul.modelo.Sinistro;
 import br.edu.ifsul.util.Util;
+import br.edu.ifsul.util.UtilRelatorios;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -42,6 +46,24 @@ public class ControleSeguro implements Serializable {
     
     public ControleSeguro() {
         
+    }
+    
+    public void imprimeSeguros() {
+        HashMap parametros = new HashMap();
+        UtilRelatorios.imprimeRelatorio("relatorioSeguros", parametros, dao.getListaTodos());
+    }
+    
+    public void imprimeSeguro(Object id) {
+        try {
+            objeto = dao.getObjectByID(id);
+            List<Seguro> lista = new ArrayList<>();
+            lista.add(objeto);
+            HashMap parametros = new HashMap();
+            UtilRelatorios.imprimeRelatorio("relatorioSeguros", parametros, lista);
+            abaAtiva = 0;
+        } catch (Exception e) {
+            Util.mensagemErro("Erro ao imprimir objeto: " + Util.getMensagemErro(e));
+        }
     }
     
     public void novaCobertura() {
