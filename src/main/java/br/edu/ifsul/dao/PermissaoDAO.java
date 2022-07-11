@@ -19,7 +19,7 @@ public class PermissaoDAO<TIPO> extends DAOGenerico<Permissao> implements Serial
         super();
         classePersistente = Permissao.class;
         // lista de ordenações possíveis
-        listaOrdem.add(new Ordem("nome", "nome", "like"));
+        listaOrdem.add(new Ordem("nome", "Nome", "like"));
         listaOrdem.add(new Ordem("descricao", "Descrição", "like"));
         // ordem atual
         ordemAtual = listaOrdem.get(0);

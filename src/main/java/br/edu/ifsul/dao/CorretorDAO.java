@@ -27,6 +27,14 @@ public class CorretorDAO<TIPO> extends DAOGenerico<Corretor> implements Serializ
         // inicializar o conversor de ordem com a lista de ordens
         converterOrdem = new ConverterOrdem();
         converterOrdem.setListaOrdem(listaOrdem);
+        
+    }
+    
+    @Override
+    public Corretor getObjectByID(Object id) throws Exception {
+        Corretor obj = em.find(Corretor.class, id);
+        obj.getPermissoes().size();
+        return obj;
     }
     
 }
