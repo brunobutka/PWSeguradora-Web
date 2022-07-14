@@ -7,6 +7,7 @@ package br.edu.ifsul.dao;
 import br.edu.ifsul.modelo.Corretor;
 import java.io.Serializable;
 import javax.ejb.Stateful;
+import javax.persistence.Query;
 
 /**
  *
@@ -35,6 +36,31 @@ public class CorretorDAO<TIPO> extends DAOGenerico<Corretor> implements Serializ
         Corretor obj = em.find(Corretor.class, id);
         obj.getPermissoes().size();
         return obj;
+    }
+    
+    public Corretor verificaNomeUsuario(String nomeUsuario) throws Exception {
+        String jpql = "from Corretor where nomeUsuario = :pNomeUsuario";
+        Query query = em.createQuery(jpql);
+        query.setParameter("pNomeUsuario", nomeUsuario);
+        
+        Corretor c  = (Corretor) query.getSingleResult();
+        
+        if (c == null){
+            return null;
+        } else {
+            return (Corretor) c;
+        }
+    }
+    
+    public boolean verificaUnicidadeNomeUsuario(String nomeUsuario) throws Exception {
+        String jpql = "from Corretor where nomeUsuario = :pNomeUsuario";
+        Query query = em.createQuery(jpql);
+        query.setParameter("pNomeUsuario", nomeUsuario);
+        if (query.getResultList().size() > 0){
+            return false;
+        } else {
+            return true;
+        }
     }
     
 }

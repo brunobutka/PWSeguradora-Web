@@ -12,6 +12,9 @@ import br.edu.ifsul.util.Util;
 
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -53,6 +56,28 @@ public class ControleCorretor implements Serializable {
             Util.mensagemErro("Selecione um registro!");
         }
     }
+    
+    public void verificarUnicidadeNomeUsuario() {
+        if (novo) {
+            try {
+                if (!dao.verificaUnicidadeNomeUsuario(objeto.getNomeUsuario())){
+                    Util.mensagemErro("Nome de usuário '" + objeto.getNomeUsuario() + "' "
+                            + " já existe no banco de dados!");
+                    objeto.setNomeUsuario(null);
+                    // capturar o componente que chamou o método
+                    UIComponent comp = 
+                            UIComponent.getCurrentComponent(FacesContext.getCurrentInstance());
+                    if (comp != null){
+                        // deixar em vermelho após o update
+                        UIInput input = (UIInput) comp;
+                        input.setValid(false);
+                    }
+                }
+            } catch (Exception e) {
+                Util.mensagemErro("Erro do sistema:" + Util.getMensagemErro(e));
+            }
+        }
+    }
 
     public String listar() {
         return "/privado/corretor/listar?faces-redirect=true";
@@ -86,7 +111,7 @@ public class ControleCorretor implements Serializable {
 
     public void salvar() {
         try {
-            if (objeto.getId() == null) {
+            if (novo) {
                 dao.persist(objeto);
             } else {
                 dao.merge(objeto);

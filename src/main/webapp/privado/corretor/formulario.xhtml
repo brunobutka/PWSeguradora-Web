@@ -49,7 +49,12 @@
                             <p:inputText id="txtNomeUsuario"
                                          value="#{controleCorretor.objeto.nomeUsuario}"
                                          size="20" maxlength="20"
-                                         placeholder="Obrigatório"/>
+                                         placeholder="Obrigatório"
+                                         readonly="#{!controleCorretor.novo}">
+                                <p:ajax process="@this" update="@this growl"
+                                        listener="#{controleCorretor.verificarUnicidadeNomeUsuario()}"
+                                        event="blur"/>
+                            </p:inputText>
                             <p:outputLabel value="Senha" for="txtSenha"/>
                             <p:password id="txtSenha" 
                                         value="#{controleCorretor.objeto.senha}"

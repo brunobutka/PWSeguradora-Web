@@ -25,4 +25,73 @@
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>  
+    
+    <!-- Segurança -->
+    <security-constraint>
+        <display-name>privado</display-name>
+        <web-resource-collection>
+            <web-resource-name>privado</web-resource-name>
+            <url-pattern>/privado/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>PUT</http-method>
+            <http-method>POST</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ALTERAR</role-name>
+            <role-name>COMUM</role-name>
+            <role-name>EXCLUIR</role-name>
+            <role-name>INCLUIR</role-name>
+            <role-name>ADMINISTRADOR</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>https</display-name>
+        <web-resource-collection>
+            <web-resource-name>https</web-resource-name>
+            <url-pattern>/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>PUT</http-method>
+            <http-method>POST</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>PWSeguradora-Realm</realm-name>
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/loginerror.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description>alterar</description>
+        <role-name>ALTERAR</role-name>
+    </security-role>
+    <security-role>
+        <description>comum</description>
+        <role-name>COMUM</role-name>
+    </security-role>
+    <security-role>
+        <description>excluir</description>
+        <role-name>EXCLUIR</role-name>
+    </security-role>
+    <security-role>
+        <description>incluir</description>
+        <role-name>INCLUIR</role-name>
+    </security-role>
+    <security-role>
+        <description>administrador</description>
+        <role-name>ADMINISTRADOR</role-name>
+    </security-role>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/negado.xhtml</location>
+    </error-page>
 </web-app>
