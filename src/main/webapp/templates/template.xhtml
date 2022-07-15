@@ -31,7 +31,8 @@
                                         ajax="false"/>
                             <p:menuitem action="#{controlePermissao.listar()}"
                                         value="Manutenção de Permissões"
-                                        ajax="false"/>
+                                        ajax="false"
+                                        rendered="#{p:ifGranted('ADMINISTRADOR')}"/>
                             <p:menuitem action="#{controlePessoa.listar()}"
                                         value="Manutenção de Pessoas"
                                         ajax="false"/>

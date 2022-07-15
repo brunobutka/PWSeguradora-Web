@@ -14,7 +14,8 @@
                                  icon="pi pi-plus"
                                  update="formEdicao"
                                  process="@this"
-                                 oncomplete="PF('dlg').show();"/>
+                                 oncomplete="PF('dlg').show();"
+                                 rendered="#{p:ifGranted('ADMINISTRADOR')}"/>
                 <div align="center">
                     <p:panelGrid columns="11">
                         <p:outputLabel value="Ordem: "/>
@@ -71,14 +72,16 @@
                                 icon="pi pi-pencil"
                                 title="Editar o objeto de nome: #{obj.nome}"
                                 update="formEdicao" process="@this"
-                                oncomplete="PF('dlg').show();"/>
+                                oncomplete="PF('dlg').show();"
+                                rendered="#{p:ifGranted('ADMINISTRADOR')}"/>
                             <p:commandButton
                                 actionListener="#{controlePermissao.excluir(obj.nome)}"
                                 icon="pi pi-trash"
                                 update="@form"
                                 process="@this"
                                 title="Remover o objeto de nome: #{obj.nome}"
-                                onclick="if (!confirm('Deseja remover o objeto de nome: #{obj.nome}')) return false"/>
+                                onclick="if (!confirm('Deseja remover o objeto de nome: #{obj.nome}')) return false"
+                                rendered="#{p:ifGranted('ADMINISTRADOR')}"/>
                         </div>
                     </p:column>
                 </p:dataTable>
